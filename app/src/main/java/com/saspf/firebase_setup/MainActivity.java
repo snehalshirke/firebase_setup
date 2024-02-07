@@ -2,6 +2,7 @@ package com.saspf.firebase_setup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -17,8 +18,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -78,6 +83,33 @@ public class MainActivity extends AppCompatActivity {
                    }
                }).create();
                alertDialog.show();
+            }
+        });
+
+        RecyclerView recyclerView = findViewById(R.id.recycler);
+        database.getReference().child("notes").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Note> arrayList = new ArrayList<>();
+                for (DataSnapshot datasnapshot: snapshot.getChildren()){
+                    Note note = datasnapshot.getValue(Note.class);
+                    Objects.requireNonNull(note).setKey(datasnapshot.getKey());
+                    arrayList.add(note);
+                }
+                NoteAdapter adapter = new NoteAdapter(MainActivity.this,arrayList);
+                recyclerView.setAdapter(adapter);
+
+                adapter.setOnItemClickListener(new NoteAdapter.OnItemClickListener() {
+                    @Override
+                    public void onClick(Note note) {
+                        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.add_note_dialog,null);
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
