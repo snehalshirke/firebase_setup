@@ -103,6 +103,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(Note note) {
                         View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.add_note_dialog,null);
+                        TextInputLayout titleLayout,contentLayout;
+                        TextInputEditText titleET,contentET;
+                        titleLayout = view.findViewById(R.id.titleLayout);
+                        contentLayout = view.findViewById(R.id.contentLayout);
+                        titleET = view.findViewById(R.id.titleET);
+                        contentET = view.findViewById(R.id.contentET);
                     }
                 });
             }
