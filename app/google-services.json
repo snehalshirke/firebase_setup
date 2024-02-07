@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "797881734735",
+    "project_id": "fir-setup-ad6da",
+    "storage_bucket": "fir-setup-ad6da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797881734735:android:053febcf9baa17c7ee3c3a",
+        "android_client_info": {
+          "package_name": "com.saspf.firebase_setup"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqy6I3cB1JKot8cXXXtK_E58SiLdiNkC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
