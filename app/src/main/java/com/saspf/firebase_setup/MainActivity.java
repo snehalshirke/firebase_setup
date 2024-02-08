@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
                                 .setTitle("Edit")
                                 .setView(view)
-                                .setPositiveButton("save", new DialogInterface.OnClickListener() {
+                                .setPositiveButton("Update", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         if (Objects.requireNonNull(titleET.getText()).toString().isEmpty()){
