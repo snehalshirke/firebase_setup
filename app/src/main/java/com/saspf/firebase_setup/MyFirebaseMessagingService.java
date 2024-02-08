@@ -1,5 +1,6 @@
 package com.saspf.firebase_setup;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.pm.PackageManager;
 
@@ -19,6 +20,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         getFirebaseMessage(message.getNotification().getTitle(), message.getNotification().getBody());
     }
 
+    @SuppressLint("MissingPermission")
     private void getFirebaseMessage(String title, String body) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "notify")
                 .setSmallIcon(R.drawable.notifications_active)
@@ -26,16 +28,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentText(body)
                 .setAutoCancel(true);
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
         managerCompat.notify(102, builder.build());
     }
 }
