@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Checking", Toast.LENGTH_SHORT).show();
                 View view1 = LayoutInflater.from(MainActivity.this).inflate(R.layout.add_note_dialog,null);
                 TextInputEditText titleLayout,contentLayout;
                 titleLayout  = view1.findViewById(R.id.titleLayout);
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                                public void onSuccess(Void unused) {
                                    dialog.dismiss();
                                    dialogInterface.dismiss();
-                                   Toast.makeText(MainActivity.this, "Saved Succesfully", Toast.LENGTH_SHORT).show();
+                                   Toast.makeText(MainActivity.this, "Saved Successfully", Toast.LENGTH_SHORT).show();
                                }
                            }).addOnFailureListener(new OnFailureListener() {
                                @Override
