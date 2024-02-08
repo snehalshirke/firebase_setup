@@ -138,10 +138,10 @@ public class MainActivity extends AppCompatActivity {
                                         } else {
                                             progressDialog.setMessage("Saving.");
                                             progressDialog.show();
-                                            Note note = new Note();
-                                            note.setTitle(titleET.getText().toString());
-                                            note.setContent(contentET.getText().toString());
-                                            database.getReference().child("notes").child(note.getKey()).setValue(note).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            Note note1 = new Note();
+                                            note1.setTitle(titleET.getText().toString());
+                                            note1.setContent(contentET.getText().toString());
+                                            database.getReference().child("notes").child(note.getKey()).setValue(note1).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void unused) {
                                                     progressDialog.dismiss();
