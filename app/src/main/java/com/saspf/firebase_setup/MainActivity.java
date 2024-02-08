@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Checking", Toast.LENGTH_SHORT).show();
                 View view1 = LayoutInflater.from(MainActivity.this).inflate(R.layout.add_note_dialog,null);
                 TextInputLayout titleLayout,contentLayout;
                 TextInputEditText titleET, contentET;
