@@ -105,10 +105,56 @@ public class MainActivity extends AppCompatActivity {
                         View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.add_note_dialog,null);
                         TextInputLayout titleLayout,contentLayout;
                         TextInputEditText titleET,contentET;
+
                         titleLayout = view.findViewById(R.id.titleLayout);
                         contentLayout = view.findViewById(R.id.contentLayout);
                         titleET = view.findViewById(R.id.titleET);
                         contentET = view.findViewById(R.id.contentET);
+
+                        titleET.setText(note.getTitle());
+                        contentET.setText(note.getContent());
+
+                        ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+
+                        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("Edit")
+                                .setView(view)
+                                .setPositiveButton("save", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        if (Objects.requireNonNull(titleET.getText()).toString().isEmpty()){
+                                            titleLayout.setError("This field is required!");
+                                        } else if (Objects.requireNonNull(contentET.getText()).toString().isEmpty()) {
+                                            contentET.setError("This field is required!");
+                                        } else {
+                                            progressDialog.setMessage("Saving.");
+                                            progressDialog.show();
+                                            Note note = new Note();
+                                            note.setTitle(titleET.getText().toString());
+                                            note.setContent(contentET.getText().toString());
+                                            database.getReference().child("notes").child(note.getKey()).setValue(note).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    progressDialog.dismiss();
+                                                    dialogInterface.dismiss();
+                                                    Toast.makeText(MainActivity.this, "Saved Succesfully", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    progressDialog.dismiss();
+                                                    Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        }
+                                    }
+                                }).setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                    }
+                                }).create();
+                        alertDialog.show();
                     }
                 });
             }
