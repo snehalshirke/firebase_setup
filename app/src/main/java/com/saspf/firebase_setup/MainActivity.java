@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.recycler);
+        TextView empty = findViewById(R.id.empty);
         database.getReference().child("notes").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -95,6 +97,13 @@ public class MainActivity extends AppCompatActivity {
                     Note note = datasnapshot.getValue(Note.class);
                     Objects.requireNonNull(note).setKey(datasnapshot.getKey());
                     arrayList.add(note);
+                }
+                if (arrayList.isEmpty()){
+                    empty.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                } else {
+                    empty.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
                 }
                 NoteAdapter adapter = new NoteAdapter(MainActivity.this,arrayList);
                 recyclerView.setAdapter(adapter);
@@ -148,10 +157,28 @@ public class MainActivity extends AppCompatActivity {
                                             });
                                         }
                                     }
-                                }).setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                                }).setNeutralButton("close", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         dialogInterface.dismiss();
+                                    }
+                                }).setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        progressDialog.setTitle("deleting");
+                                        progressDialog.show();
+                                        database.getReference().child("notes").child(note.getKey()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                progressDialog.dismiss();
+                                                Toast.makeText(MainActivity.this, "deleted Successfully", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                progressDialog.dismiss();
+                                            }
+                                        });
                                     }
                                 }).create();
                         alertDialog.show();
