@@ -42,10 +42,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "Checking", Toast.LENGTH_SHORT).show();
                 View view1 = LayoutInflater.from(MainActivity.this).inflate(R.layout.add_note_dialog,null);
-                TextInputEditText titleLayout,contentLayout;
+                TextInputLayout titleLayout,contentLayout;
+                TextInputEditText titleET, contentET;
                 titleLayout  = view1.findViewById(R.id.titleLayout);
                 contentLayout = view1.findViewById(R.id.contentLayout);
-                TextInputEditText titleET, contentET;
+
                 titleET = view1.findViewById(R.id.titleET);
                 contentET = view1.findViewById(R.id.contentET);
                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).setTitle("Add").setView(view1).setPositiveButton("add", new DialogInterface.OnClickListener() {
